@@ -61,9 +61,11 @@ int main(int argc, char *argv[]) {
    bzero(buffer,133);
    fgets(buffer,133,stdin);
    
-   writeInfoToFile(buffer, portno);
+   
    /* Send message to the server */
    n = write(sockfd, buffer, strlen(buffer));
+   buffer[strcspn(buffer, "\\r\\n\n")] = 0; 
+   writeInfoToFile(buffer, portno);
    
    if (n < 0) {
       perror("ERROR writing to socket");
